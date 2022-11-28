@@ -1,5 +1,6 @@
 package co.edu.icesi.JCStore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.Type;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Data
 @Table(name = "item")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Item {
 
