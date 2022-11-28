@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @Table
-public class Order {
+public class TheOrder {
 
     @Id
     private UUID orderId;
