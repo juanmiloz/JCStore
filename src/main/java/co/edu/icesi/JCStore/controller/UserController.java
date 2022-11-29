@@ -1,6 +1,6 @@
 package co.edu.icesi.JCStore.controller;
 
-import co.edu.icesi.JCStore.api.UserApi;
+import co.edu.icesi.JCStore.api.UserAPI;
 import co.edu.icesi.JCStore.config.InitialDataConfig;
 import co.edu.icesi.JCStore.constants.CodesError;
 import co.edu.icesi.JCStore.dto.CreateUserDTO;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @Import({InitialDataConfig.class})
-public class UserController implements UserApi {
+public class UserController implements UserAPI {
 
     UserService userService;
 

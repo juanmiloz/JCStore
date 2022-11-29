@@ -1,4 +1,4 @@
-package com.icesi.edu.users.utils;
+package co.edu.icesi.JCStore.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;

@@ -17,7 +17,7 @@
  * SELL ANYTHING THAT IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
 
-package com.icesi.edu.users.security;
+package co.edu.icesi.JCStore.security;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

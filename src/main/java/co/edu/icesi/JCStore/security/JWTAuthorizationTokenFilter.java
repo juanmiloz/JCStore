@@ -16,13 +16,13 @@
  * DOES NOT CONVEY OR IMPLY ANY RIGHT TO REPRODUCE, DISCLOSE, DISTRIBUTE OR OTHERWISE USE IT, OR TO MANUFACTURE, USE, OR
  * SELL ANYTHING THAT IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.icesi.edu.users.security;
+package co.edu.icesi.JCStore.security;
 
+import co.edu.icesi.JCStore.constants.CodesError;
+import co.edu.icesi.JCStore.error.exception.UserDemoError;
+import co.edu.icesi.JCStore.error.exception.UserDemoException;
+import co.edu.icesi.JCStore.utils.JWTParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.icesi.edu.users.constant.ErrorConstants;
-import com.icesi.edu.users.error.exception.UserDemoError;
-import com.icesi.edu.users.error.exception.UserDemoException;
-import com.icesi.edu.users.utils.JWTParser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -72,10 +72,10 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.setUserContext(context);
                 filterChain.doFilter(request, response);
             } else {
-                createUnauthorizedFilter(new UserDemoException(HttpStatus.UNAUTHORIZED, new UserDemoError(ErrorConstants.CODE_01.getCode(), ErrorConstants.CODE_01.getMessage())), response);
+                createUnauthorizedFilter(new UserDemoException(HttpStatus.UNAUTHORIZED, new UserDemoError(CodesError.CODE_04.getCode(), CodesError.CODE_04.getMessage())), response);
             }
         } catch (JwtException e) {
-            createUnauthorizedFilter(new UserDemoException(HttpStatus.UNAUTHORIZED, new UserDemoError(ErrorConstants.CODE_01.getCode(), ErrorConstants.CODE_01.getMessage())), response);
+            createUnauthorizedFilter(new UserDemoException(HttpStatus.UNAUTHORIZED, new UserDemoError(CodesError.CODE_04.getCode(), CodesError.CODE_04.getMessage())), response);
         } finally {
             SecurityContextHolder.clearContext();
         }
