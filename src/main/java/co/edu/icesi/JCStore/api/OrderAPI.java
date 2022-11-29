@@ -17,4 +17,7 @@ public interface OrderAPI {
 
     @GetMapping("/{orderId}")
     public OrderDTO getOrderDTO(@PathVariable UUID orderId);
+
+    @PatchMapping("/{orderId}")
+    public OrderDTO updateOrderStatus(@PathVariable UUID orderId, @RequestBody OrderDTO orderDTO);
 }

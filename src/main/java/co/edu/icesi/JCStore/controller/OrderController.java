@@ -32,4 +32,9 @@ public class OrderController implements OrderAPI {
     public OrderDTO getOrderDTO(UUID orderId) {
         return orderMapper.fromOrder(orderService.getOrder(orderId));
     }
+
+    @Override
+    public OrderDTO updateOrderStatus(UUID orderId, OrderDTO orderDTO) {
+        return orderMapper.fromOrder(orderService.updateOrderStatus(orderId, orderMapper.fromDTO(orderDTO)));
+    }
 }

@@ -31,4 +31,13 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrder(UUID orderId) {
         return orderRepository.findById(orderId).orElse(null);
     }
+
+    @Override
+    public Order updateOrderStatus(UUID orderId, Order order) {
+        Order updatedOrder = orderRepository.findById(orderId).orElse(null);
+        if(updatedOrder != null){
+            updatedOrder.setStatus(order.getStatus());
+        }
+        return updatedOrder;
+    }
 }
