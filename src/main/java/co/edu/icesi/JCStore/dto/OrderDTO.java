@@ -16,4 +16,6 @@ public class OrderDTO {
     private String status;
 
     private List<ItemDTO> orderItems;
+
+    private UUID userId;
 }

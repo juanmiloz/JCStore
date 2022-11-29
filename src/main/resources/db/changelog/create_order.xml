@@ -4,12 +4,15 @@
 
     <changeSet id="33d4e9bc-7210-47c3-9617-c56ab7c0750d" author="juan.zorrilla" failOnError="true">
 
-        <createTable tableName="the_order">
+        <createTable tableName="orders">
             <column name="order_id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="total" type="number"/>
             <column name="status" type="varchar(255)"/>
+            <column name="user_id" type="UUID">
+                <constraints foreignKeyName="fk_user_id" references="users(id)" nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>
