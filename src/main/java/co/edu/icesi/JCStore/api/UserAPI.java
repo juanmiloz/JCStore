@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @RequestMapping("/users")
-public interface UserApi {
+public interface UserAPI {
 
     @PostMapping()
     UserDTO createUser(@RequestBody CreateUserDTO createUserDTO);
