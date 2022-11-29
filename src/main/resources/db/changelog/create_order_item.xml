@@ -14,8 +14,6 @@
             <column name="item_id" type="UUID" >
                 <constraints primaryKey="true" nullable="false" references="item(item_id)" foreignKeyName="fk-order-item-item"/>
             </column>
-
-
             <column name="order_id" type="UUID" >
                 <constraints primaryKey="true" nullable="false" references="the_order(order_id)" foreignKeyName="fk-order-item-order"/>
             </column>

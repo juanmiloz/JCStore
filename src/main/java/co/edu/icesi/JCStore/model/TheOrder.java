@@ -19,7 +19,7 @@ public class TheOrder {
     @Column(name = "status")
     private String status;
 
-    @ManyToMany(cascade = {
+    /*@ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     }, fetch = FetchType.EAGER)
@@ -27,5 +27,5 @@ public class TheOrder {
             name = "order_item",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private List<Item> orderItems;
+    private List<Item> orderItems;*/
 }

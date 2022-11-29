@@ -1,29 +1,50 @@
 package co.edu.icesi.JCStore.controller;
 
 import co.edu.icesi.JCStore.api.UserApi;
+import co.edu.icesi.JCStore.config.InitialDataConfig;
 import co.edu.icesi.JCStore.constants.CodesError;
+import co.edu.icesi.JCStore.dto.CreateUserDTO;
 import co.edu.icesi.JCStore.dto.UserDTO;
 import co.edu.icesi.JCStore.error.exception.UserDemoError;
 import co.edu.icesi.JCStore.error.exception.UserDemoException;
+import co.edu.icesi.JCStore.mapper.UserMapper;
+import co.edu.icesi.JCStore.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+@Import({InitialDataConfig.class})
 public class UserController implements UserApi {
 
+    UserService userService;
 
+    UserMapper userMapper;
+
+    @CrossOrigin(origins = "*")
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
-        return null;
+    public UserDTO createUser(CreateUserDTO createUserDTO) {
+        verifyEmailOrPhone(createUserDTO);
+
+        return userMapper.fromUser(userService.createUser(userMapper.fromCreateDTO(createUserDTO), createUserDTO.getRoleId()));
     }
 
-    private void verifyEmailOrPhone(UserDTO userDTO){
-        if(userDTO.getEmail() == null && userDTO.getPhone() == null){
+    private void verifyEmailOrPhone(CreateUserDTO createUserDTO){
+        if(createUserDTO.getEmail() == null && createUserDTO.getPhone() == null){
             throw new UserDemoException(HttpStatus.BAD_REQUEST,
                     new UserDemoError(CodesError.CODE_O1.getCode(),CodesError.CODE_O1.getMessage()));
         }
+    }
+
+    @Override
+    public List<UserDTO> getUsers() {
+        return userService.getUsers().stream().map(userMapper::fromUser).collect(Collectors.toList());
     }
 
 }

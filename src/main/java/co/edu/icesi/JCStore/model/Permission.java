@@ -20,7 +20,7 @@ public class Permission {
 
     private String uri;
 
-    private String permissioKey;
+    private String permissionKey;
 
     @Column(name = "permission_method")
     private String method;

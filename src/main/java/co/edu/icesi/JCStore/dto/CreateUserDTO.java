@@ -1,6 +1,5 @@
 package co.edu.icesi.JCStore.dto;
 
-import co.edu.icesi.JCStore.model.Role;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class CreateUserDTO {
 
     private UUID id;
 
@@ -26,6 +25,7 @@ public class UserDTO {
 
     private String phone;
 
-    private Role role;
+    @NotNull
+    private UUID roleId;
 
 }
