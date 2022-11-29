@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -19,16 +20,16 @@ public class OrderController implements OrderAPI {
 
     @Override
     public OrderDTO createOrder(OrderDTO orderDTO) {
-        return null;
+        return orderMapper.fromOrder(orderService.createOrder(orderMapper.fromDTO(orderDTO)));
     }
 
     @Override
     public List<OrderDTO> getOrders() {
-        return null;
+        return orderService.getOrders().stream().map(orderMapper::fromOrder).collect(Collectors.toList());
     }
 
     @Override
     public OrderDTO getOrderDTO(UUID orderId) {
-        return null;
+        return orderMapper.fromOrder(orderService.getOrder(orderId));
     }
 }

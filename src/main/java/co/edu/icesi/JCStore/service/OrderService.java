@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public interface OrderService {
 
-
     public Order createOrder(@PathVariable Order order);
 
     public List<Order> getOrders();
