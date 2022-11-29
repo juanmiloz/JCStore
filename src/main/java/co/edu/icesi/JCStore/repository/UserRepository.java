@@ -11,6 +11,9 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends CrudRepository<User, UUID> {
 
-    @Query(value = "SELECT u FROM USER WHERE u.email = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM USERS WHERE email = ?1", nativeQuery = true)
     Optional<User> findUserByEmail(String email);
+
+    @Query(value = "SELECT u FROM USERS WHERE u.phone = ?1", nativeQuery = true)
+    Optional<User> findUserByPhone(String phone);
 }
