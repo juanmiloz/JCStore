@@ -4,7 +4,7 @@
 
     <changeSet id="33d4e9bc-7210-47c3-9617-c56ab7c0750d" author="juan.zorrilla" failOnError="true">
 
-        <createTable tableName="user">
+        <createTable tableName="users">
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
