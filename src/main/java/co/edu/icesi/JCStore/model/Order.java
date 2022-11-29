@@ -45,4 +45,9 @@ public class Order {
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
 
+    @PrePersist
+    public void generateData() {
+        this.orderId = UUID.randomUUID();
+    }
+
 }
