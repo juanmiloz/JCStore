@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public interface OrderAPI {
 
     @PostMapping
