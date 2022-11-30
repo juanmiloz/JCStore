@@ -19,3 +19,7 @@ VALUES ('cbe5ea52-0edb-4d2e-a883-1488f1520b20', 'ccc7ff73-1989-413a-ab52-9bec7a0
 --Base admin user
 INSERT INTO users (id, name, email, password, address, phone, role_id)
 VALUES ('69a91b05-4621-4a79-9c94-372fa108d132', 'admin', 'admin@gmail.com', 'Admin#1', 'Home', '+57123456789', 'cbe5ea52-0edb-4d2e-a883-1488f1520b20');
+
+--Initial client user
+INSERT INTO users (id, name, email, password, address, phone, role_id)
+VALUES ('f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454', 'client', 'client@gmail.com', 'Client#1', 'House', '+57123456789', '7832c0fe-d0f0-425a-8d36-d32693c57aff');
