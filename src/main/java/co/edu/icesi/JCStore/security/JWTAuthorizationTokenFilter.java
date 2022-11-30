@@ -33,6 +33,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -45,7 +46,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
+@CrossOrigin(origins = "*")
 @Component
 @Order(1)
 public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
@@ -55,9 +56,9 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
 
     private static final String USER_ID_CLAIM_NAME = "userId";
 
-    private static final String[] excludedPaths = {"POST /login"}; //El unico path excluido debe ser el login
+    private static final String[] excludedPaths = {"POST /auth", "POST /users"};
 
-
+    @CrossOrigin(origins = "*")
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -81,6 +82,7 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @SneakyThrows
     private void createUnauthorizedFilter(UserDemoException userDemoException, HttpServletResponse response) {
 
@@ -96,6 +98,7 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         response.getWriter().flush();
     }
 
+    @CrossOrigin(origins = "*")
     private SecurityContext parseClaims(String jwtToken, Claims claims) {
         String userId = claimKey(claims, USER_ID_CLAIM_NAME);
 
@@ -109,17 +112,20 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         return context;
     }
 
+    @CrossOrigin(origins = "*")
     private String claimKey(Claims claims, String key) {
         String value = (String) claims.get(key);
         return Optional.ofNullable(value).orElseThrow();
     }
 
+    @CrossOrigin(origins = "*")
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String methodPlusPath = request.getMethod() + " " + request.getRequestURI();
         return Arrays.stream(excludedPaths).anyMatch(path -> path.equalsIgnoreCase(methodPlusPath));
     }
 
+    @CrossOrigin(origins = "*")
     private boolean containsToken(HttpServletRequest request) {
         String authenticationHeader = request.getHeader(AUTHORIZATION_HEADER);
         return authenticationHeader != null && authenticationHeader.startsWith(TOKEN_PREFIX);

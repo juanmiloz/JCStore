@@ -26,8 +26,7 @@ public class UserController implements UserAPI {
     UserService userService;
 
     UserMapper userMapper;
-
-    @CrossOrigin(origins = "*")
+    
     @Override
     public UserDTO createUser(CreateUserDTO createUserDTO) {
         verifyEmailOrPhone(createUserDTO);

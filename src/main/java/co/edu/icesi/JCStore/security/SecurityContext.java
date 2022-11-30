@@ -22,11 +22,13 @@ package co.edu.icesi.JCStore.security;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*")
 @Setter
 @EqualsAndHashCode
 @ToString
