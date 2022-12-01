@@ -1,5 +1,6 @@
 package co.edu.icesi.JCStore.model;
 
+import co.edu.icesi.JCStore.constants.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,8 +26,9 @@ public class Order {
     @Column(name = "total")
     private double total;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private OrderStatus status;
 
     /*@ManyToMany(cascade = {
             CascadeType.PERSIST,
