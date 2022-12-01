@@ -29,6 +29,9 @@ public class Item {
     @Column(name = "price")
     private double price;
 
+    @Column(name = "url")
+    private String url;
+
     @PrePersist
     public void generateId() { this.itemId = UUID.randomUUID();}
 

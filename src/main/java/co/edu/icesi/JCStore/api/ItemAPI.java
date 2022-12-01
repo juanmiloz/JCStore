@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*")
 @RequestMapping("/items")
-public interface ItemAPI {
+public interface
+ItemAPI {
 
     @PostMapping
     public ItemDTO createItem(@RequestBody ItemDTO itemDTO);
