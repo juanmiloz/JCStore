@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,7 +28,6 @@ public class UserController implements UserAPI {
 
     UserMapper userMapper;
 
-    @CrossOrigin(origins = "*")
     @Override
     public UserDTO createUser(CreateUserDTO createUserDTO) {
         verifyEmailOrPhone(createUserDTO);
@@ -42,10 +42,14 @@ public class UserController implements UserAPI {
         }
     }
 
-    @CrossOrigin(origins = "*")
     @Override
     public List<UserDTO> getUsers() {
         return userService.getUsers().stream().map(userMapper::fromUser).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO getUser(UUID userId) {
+        return userMapper.fromUser(userService.getUser(userId));
     }
 
 }

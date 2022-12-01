@@ -59,7 +59,6 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
 
     private static final String[] excludedPaths = {"OPTIONS /auth", "POST /users", "POST /auth", "OPTIONS /users","GET /users"};
 
-    @CrossOrigin(origins = "*")
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -82,8 +81,6 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
         }
     }
-
-    @CrossOrigin(origins = "*")
     @SneakyThrows
     private void createUnauthorizedFilter(UserDemoException userDemoException, HttpServletResponse response) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -98,7 +95,6 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         response.getWriter().flush();
     }
 
-    @CrossOrigin(origins = "*")
     private SecurityContext parseClaims(String jwtToken, Claims claims) {
         String userId = claimKey(claims, USER_ID_CLAIM_NAME);
 
@@ -112,25 +108,22 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         return context;
     }
 
-    @CrossOrigin(origins = "*")
     private String claimKey(Claims claims, String key) {
         String value = (String) claims.get(key);
         return Optional.ofNullable(value).orElseThrow();
     }
 
-    @CrossOrigin(origins = "*")
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
+        if(request.getMethod().equalsIgnoreCase("OPTIONS")){
+            return true;
+        }
         String methodPlusPath = request.getMethod() + " " + request.getRequestURI();
         return Arrays.stream(excludedPaths).anyMatch(path -> path.equalsIgnoreCase(methodPlusPath));
     }
 
-    @CrossOrigin(origins = "*")
     private boolean containsToken(HttpServletRequest request) {
         String authenticationHeader = request.getHeader(AUTHORIZATION_HEADER);
         return authenticationHeader != null && authenticationHeader.startsWith(TOKEN_PREFIX);
     }
-
-
-
 }
