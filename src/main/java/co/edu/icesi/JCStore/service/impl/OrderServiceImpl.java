@@ -53,6 +53,11 @@ public class OrderServiceImpl implements OrderService {
         return updatedOrder;
     }
 
+    @Override
+    public List<Order> getOrdersMadeByUser(UUID userId) {
+        return orderRepository.findUserOrders(userId).orElse(new ArrayList<>());
+    }
+
     private void calculateOrdersTotal(Order order) {
         double total = 0;
         System.out.println(orderItemsRepository.findOrderItems(order.getOrderId()));

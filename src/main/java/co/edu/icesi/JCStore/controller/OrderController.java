@@ -37,4 +37,9 @@ public class OrderController implements OrderAPI {
     public OrderDTO updateOrderStatus(UUID orderId, OrderDTO orderDTO) {
         return orderMapper.fromOrder(orderService.updateOrderStatus(orderId, orderMapper.fromDTO(orderDTO)));
     }
+
+    @Override
+    public List<OrderDTO> getOrdersMadeByUser(UUID userId) {
+        return orderService.getOrdersMadeByUser(userId).stream().map(orderMapper::fromOrder).collect(Collectors.toList());
+    }
 }

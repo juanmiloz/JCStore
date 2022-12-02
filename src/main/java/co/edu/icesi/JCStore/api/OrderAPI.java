@@ -21,4 +21,7 @@ public interface OrderAPI {
 
     @PatchMapping("/{orderId}")
     public OrderDTO updateOrderStatus(@PathVariable UUID orderId, @RequestBody OrderDTO orderDTO);
+
+    @GetMapping("/users/{userId}")
+    public List<OrderDTO> getOrdersMadeByUser(@PathVariable UUID userId);
 }
