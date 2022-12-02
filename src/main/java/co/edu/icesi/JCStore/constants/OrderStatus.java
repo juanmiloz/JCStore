@@ -1,5 +1,5 @@
 package co.edu.icesi.JCStore.constants;
 
 public enum OrderStatus {
-    COMPLETED, SEND, PENDING
+    COMPLETED, SEND, PENDING, CANCELED
 }
