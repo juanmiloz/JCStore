@@ -15,7 +15,7 @@ public class OrderItemDTO {
 
     private int quantity;
 
-    private OrderDTO order;
+    //private OrderDTO order;
 
     private ItemDTO item;
 }
