@@ -38,4 +38,9 @@ public class ItemController implements ItemAPI {
     public ItemDTO getItem(UUID itemId) {
         return itemMapper.fromItem(itemService.getItem(itemId));
     }
+
+    @Override
+    public ItemDTO updateItem(UUID itemId, ItemDTO itemDTO) {
+        return itemMapper.fromItem(itemService.updateItem(itemId, itemMapper.fromDTO(itemDTO)));
+    }
 }
