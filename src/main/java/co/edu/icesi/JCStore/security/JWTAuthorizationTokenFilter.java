@@ -41,6 +41,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,7 +57,7 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
 
     private static final String USER_ID_CLAIM_NAME = "userId";
 
-    private static final String[] excludedPaths = {"POST /auth", "POST /users"};
+    private static final String[] excludedPaths = {"OPTIONS /auth", "POST /users", "POST /auth", "OPTIONS /users","GET /users"};
 
     @Override
     protected void doFilterInternal(
@@ -80,7 +81,6 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
         }
     }
-
     @SneakyThrows
     private void createUnauthorizedFilter(UserDemoException userDemoException, HttpServletResponse response) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -115,6 +115,9 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
+        if(request.getMethod().equalsIgnoreCase("OPTIONS")){
+            return true;
+        }
         String methodPlusPath = request.getMethod() + " " + request.getRequestURI();
         return Arrays.stream(excludedPaths).anyMatch(path -> path.equalsIgnoreCase(methodPlusPath));
     }
@@ -123,7 +126,4 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         String authenticationHeader = request.getHeader(AUTHORIZATION_HEADER);
         return authenticationHeader != null && authenticationHeader.startsWith(TOKEN_PREFIX);
     }
-
-
-
 }

@@ -1,7 +1,5 @@
 package co.edu.icesi.JCStore.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +34,10 @@ public class Item {
 
     @Column(name = "price")
     private double price;
+
+    @Column(name = "url")
+    private String url;
+
     @PrePersist
     public void generateId() { this.itemId = UUID.randomUUID();}
 

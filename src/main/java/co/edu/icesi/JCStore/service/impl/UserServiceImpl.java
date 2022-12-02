@@ -54,4 +54,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsers() {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
+
+    @Override
+    public User getUser(UUID userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
 }

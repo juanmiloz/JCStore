@@ -5,7 +5,9 @@ import co.edu.icesi.JCStore.dto.UserDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
+@CrossOrigin(origins = "*")
 @RequestMapping("/users")
 public interface UserAPI {
 
@@ -14,4 +16,7 @@ public interface UserAPI {
 
     @GetMapping()
     List<UserDTO> getUsers();
+
+    @GetMapping("/{userId}")
+    UserDTO getUser(@PathVariable UUID userId);
 }

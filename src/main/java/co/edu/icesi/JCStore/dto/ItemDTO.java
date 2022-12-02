@@ -21,4 +21,6 @@ public class ItemDTO {
 
     @NotNull
     private double price;
+
+    private String url;
 }
