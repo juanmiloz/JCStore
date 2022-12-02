@@ -45,6 +45,6 @@ public class OrderController implements OrderAPI {
 
     @Override
     public OrderDTO cancelOrder(UUID orderId) {
-        return null;
+        return orderMapper.fromOrder(orderService.cancelOrder(orderId));
     }
 }
