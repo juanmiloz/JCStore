@@ -1,24 +1,33 @@
 package co.edu.icesi.JCStore.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "order_item")
+@Table(name = "`order_item`")
 public class OrderItem {
 
     @Id
+    @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID orderItemId;
 
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "order_id")
-    private UUID orderId;
+    @ManyToOne(targetEntity = Order.class)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-    @Column(name = "item_id")
-    private UUID itemId;
+    @ManyToOne(targetEntity = Item.class)
+    @JoinColumn(name = "item_id")
+    private Item item;
+
+    @PrePersist
+    public void generateData() {
+        this.orderItemId = UUID.randomUUID();
+    }
 }

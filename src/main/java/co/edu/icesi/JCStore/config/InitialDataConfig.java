@@ -15,7 +15,7 @@ public class InitialDataConfig {
     @Autowired
     public void configureInitialData(DataSource dataSource, SpringLiquibase liquibase){
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        resourceDatabasePopulator.addScript(new ClassPathResource("/role.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/items.sql"));
         DatabasePopulatorUtils.execute(resourceDatabasePopulator, dataSource);
     }
 }

@@ -21,6 +21,7 @@ public class Order {
 
     @Id
     @Type(type = "org.hibernate.type.PostgresUUIDType")
+    @Column(name = "order_id")
     private UUID orderId;
 
     @Column(name = "total")
@@ -30,20 +31,13 @@ public class Order {
     @Column(name = "status")
     private OrderStatus status;
 
-    /*@ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    }, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "order_item",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private List<Item> orderItems;*/
+    @OneToMany(mappedBy = "order", targetEntity = OrderItem.class)
+    private List<OrderItem> orderItems;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,
+    /*@ManyToOne(cascade = {CascadeType.PERSIST,
             CascadeType.MERGE
-    }, fetch = FetchType.EAGER, targetEntity = User.class)
-    @JoinColumn(name = "id")
+    }, fetch = FetchType.EAGER, targetEntity = User.class)*/
+    //@JoinColumn(name = "id")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     private UUID userId;
 
