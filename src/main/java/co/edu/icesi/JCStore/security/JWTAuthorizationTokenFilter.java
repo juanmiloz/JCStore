@@ -85,7 +85,7 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
             }
         } catch (JwtException e) {
             createUnauthorizedFilter(new UserDemoException(HttpStatus.UNAUTHORIZED, new UserDemoError(CodesError.CODE_04.getCode(), CodesError.CODE_04.getMessage())), response);
-        } finally {
+        }finally {
             SecurityContextHolder.clearContext();
         }
     }
@@ -110,12 +110,15 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
     }
 
     private boolean searchPermission(List<Permission> permissions, HttpServletRequest request){
+        String currentRequest = request.getMethod() + " " + request.getRequestURI();
+        String auxRequest = request.getMethod() + " ";
+
         for (Permission permission:permissions) {
             String permissionRequest = permission.getMethod() + " " + permission.getUri();
-            String currentRequest = request.getMethod() + " " + request.getRequestURI();
-            String auxRequest = request.getMethod() + " ";
 
-            if(permissionRequest.equals(currentRequest) || (permissionRequest.startsWith(auxRequest) && permission.getUri().endsWith("/*"))){
+            if(permissionRequest.equals(currentRequest)){
+                return true;
+            }else if(permissionRequest.endsWith("*") && currentRequest.startsWith(permissionRequest.replace("*",""))){
                 return true;
             }
         }
