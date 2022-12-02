@@ -48,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
         Order updatedOrder = orderRepository.findById(orderId).orElse(null);
         if(updatedOrder != null){
             updatedOrder.setStatus(order.getStatus());
+            orderRepository.save(updatedOrder);
         }
         return updatedOrder;
     }
