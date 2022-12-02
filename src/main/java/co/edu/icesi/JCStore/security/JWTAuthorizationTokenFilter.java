@@ -111,10 +111,11 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
 
     private boolean searchPermission(List<Permission> permissions, HttpServletRequest request){
         for (Permission permission:permissions) {
-            String permissionRequest = permission.getMethod() + " " + request.getRequestURI();
+            String permissionRequest = permission.getMethod() + " " + permission.getUri();
             String currentRequest = request.getMethod() + " " + request.getRequestURI();
+            String auxRequest = request.getMethod() + " ";
 
-            if(permissionRequest.equals(currentRequest)){
+            if(permissionRequest.equals(currentRequest) || (permissionRequest.startsWith(auxRequest) && permission.getUri().endsWith("/*"))){
                 return true;
             }
         }
