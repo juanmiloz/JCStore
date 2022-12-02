@@ -28,6 +28,9 @@ INSERT INTO user_permission (permission_id, uri, permission_key, permission_meth
 VALUES ('e2434bb5-2a2c-4769-938c-1fb90a8756ff', '/orders/*', 'update.orderStatus', 'PATCH');
 
 INSERT INTO user_permission (permission_id, uri, permission_key, permission_method)
+VALUES ('58ea58c9-9f69-4e84-8230-04147f3f85d6', '/orders/cancel/*', 'cancel.orderStatus', 'PATCH');
+
+INSERT INTO user_permission (permission_id, uri, permission_key, permission_method)
 VALUES ('aa79c146-3620-4f8d-8411-9937ab71d2c8', '/auth', 'login.loginUser', 'POST');
 
 INSERT INTO user_permission (permission_id, uri, permission_key, permission_method)
@@ -38,6 +41,9 @@ VALUES ('0aaf7cbc-62b0-471a-a9fa-3b7a289e0079', '/items', 'get.items', 'GET');
 
 INSERT INTO user_permission (permission_id, uri, permission_key, permission_method)
 VALUES ('0ca1eecd-25ca-4a74-9c14-8131d90f4699', '/items/*', 'get.item', 'GET');
+
+INSERT INTO user_permission (permission_id, uri, permission_key, permission_method)
+VALUES ('bd36cf56-4860-438d-a07b-795b3281fbf8', '/items/*', 'update.item', 'PUT');
 
 --Permission's of an specific role
 --BUYER
@@ -64,6 +70,9 @@ VALUES ('7832c0fe-d0f0-425a-8d36-d32693c57aff', '0aaf7cbc-62b0-471a-a9fa-3b7a289
 
 INSERT INTO role_permission (role_id, permission_id)
 VALUES ('7832c0fe-d0f0-425a-8d36-d32693c57aff', '0ca1eecd-25ca-4a74-9c14-8131d90f4699');
+
+INSERT INTO role_permission (role_id, permission_id)
+VALUES ('7832c0fe-d0f0-425a-8d36-d32693c57aff', '58ea58c9-9f69-4e84-8230-04147f3f85d6');
 
 --ADMIN
 INSERT INTO role_permission (role_id, permission_id)
@@ -98,6 +107,12 @@ VALUES ('cbe5ea52-0edb-4d2e-a883-1488f1520b20', '0aaf7cbc-62b0-471a-a9fa-3b7a289
 
 INSERT INTO role_permission (role_id, permission_id)
 VALUES ('cbe5ea52-0edb-4d2e-a883-1488f1520b20', '0ca1eecd-25ca-4a74-9c14-8131d90f4699');
+
+INSERT INTO role_permission (role_id, permission_id)
+VALUES ('cbe5ea52-0edb-4d2e-a883-1488f1520b20', '58ea58c9-9f69-4e84-8230-04147f3f85d6');
+
+INSERT INTO role_permission (role_id, permission_id)
+VALUES ('cbe5ea52-0edb-4d2e-a883-1488f1520b20', 'bd36cf56-4860-438d-a07b-795b3281fbf8');
 
 --Base admin user
 INSERT INTO users (id, name, email, password, address, phone, role_id)

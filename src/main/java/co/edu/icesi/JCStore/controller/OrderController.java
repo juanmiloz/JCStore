@@ -42,4 +42,9 @@ public class OrderController implements OrderAPI {
     public List<OrderDTO> getOrdersMadeByUser(UUID userId) {
         return orderService.getOrdersMadeByUser(userId).stream().map(orderMapper::fromOrder).collect(Collectors.toList());
     }
+
+    @Override
+    public OrderDTO cancelOrder(UUID orderId) {
+        return orderMapper.fromOrder(orderService.cancelOrder(orderId));
+    }
 }

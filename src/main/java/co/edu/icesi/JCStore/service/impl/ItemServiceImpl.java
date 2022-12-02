@@ -31,4 +31,16 @@ public class ItemServiceImpl implements ItemService {
     public Item getItem(UUID itemId) {
         return itemRepository.findById(itemId).orElse(null);
     }
+
+    @Override
+    public Item updateItem(UUID itemId, Item item) {
+        Item updatedItem = itemRepository.findById(itemId).orElse(null);
+        if(updatedItem != null && item != null){
+            updatedItem.setName(item.getName());
+            updatedItem.setUrl(item.getUrl());
+            updatedItem.setPrice(item.getPrice());
+            updatedItem.setDescription(item.getDescription());
+        }
+        return updatedItem;
+    }
 }

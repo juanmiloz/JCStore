@@ -12,5 +12,6 @@ public interface ItemService {
     public Item createItem(@RequestBody Item item);
     public List<Item> getItems();
     public Item getItem(@PathVariable UUID itemId);
+    public Item updateItem(@PathVariable UUID itemId, @RequestBody Item item);
 
 }

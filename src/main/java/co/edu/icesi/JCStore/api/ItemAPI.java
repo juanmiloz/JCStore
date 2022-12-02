@@ -20,6 +20,7 @@ ItemAPI {
     @GetMapping("/{itemId}")
     public ItemDTO getItem(@PathVariable UUID itemId);
 
-
+    @PutMapping("/{itemId}")
+    public ItemDTO updateItem(@PathVariable UUID itemId, @RequestBody ItemDTO itemDTO);
 
 }
