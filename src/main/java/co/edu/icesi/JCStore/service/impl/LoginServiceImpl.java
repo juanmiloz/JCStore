@@ -1,5 +1,6 @@
 package co.edu.icesi.JCStore.service.impl;
 
+import co.edu.icesi.JCStore.constants.TokenTime;
 import co.edu.icesi.JCStore.dto.LoginDTO;
 import co.edu.icesi.JCStore.dto.TokenDTO;
 import co.edu.icesi.JCStore.error.exception.UserDemoException;
@@ -31,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
             Map<String, String> claims = new HashMap<>();
             claims.put("userId", user.getId().toString());
             claims.put("roleId", user.getRole().getRoleId().toString());
-            return new TokenDTO(JWTParser.createJWT(user.getId().toString(), user.getName(),user.getName(),claims,300000L));
+            return new TokenDTO(JWTParser.createJWT(user.getId().toString(), user.getName(),user.getName(),claims, 20*TokenTime.ONE_MINUTE.getTime()));
         }
         throw new InvalidParameterException();
     }
