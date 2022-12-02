@@ -12,4 +12,8 @@ import java.util.UUID;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order, UUID> {
+
+    @Query(value = "SELECT * FROM ORDERS WHERE ORDERS.user_id = ?1", nativeQuery = true)
+    Optional<List<Order>> findUserOrders(UUID userId);
+
 }
