@@ -21,6 +21,9 @@ package co.edu.icesi.JCStore.security;
 import co.edu.icesi.JCStore.constants.CodesError;
 import co.edu.icesi.JCStore.error.exception.UserDemoError;
 import co.edu.icesi.JCStore.error.exception.UserDemoException;
+import co.edu.icesi.JCStore.model.Permission;
+import co.edu.icesi.JCStore.model.Role;
+import co.edu.icesi.JCStore.repository.RoleRepository;
 import co.edu.icesi.JCStore.utils.JWTParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -28,12 +31,12 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -41,8 +44,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,8 +59,12 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
     private static final String TOKEN_PREFIX = "Bearer ";
 
     private static final String USER_ID_CLAIM_NAME = "userId";
+    private static final String ROLE_ID_CLAIM_NAME = "roleId";
 
     private static final String[] excludedPaths = {"OPTIONS /auth", "POST /users", "POST /auth", "OPTIONS /users","GET /users"};
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     protected void doFilterInternal(
@@ -70,6 +77,7 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
                 String jwtToken = request.getHeader(AUTHORIZATION_HEADER).replace(TOKEN_PREFIX, StringUtils.EMPTY);
                 Claims claims = JWTParser.decodeJWT(jwtToken);
                 SecurityContext context = parseClaims(jwtToken, claims);
+                isAuthorized(request,context);
                 SecurityContextHolder.setUserContext(context);
                 filterChain.doFilter(request, response);
             } else {
@@ -81,6 +89,38 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
         }
     }
+
+
+    private void isAuthorized(HttpServletRequest request,SecurityContext context){
+        UUID roleId = context.getRoleId();
+        boolean authorizedFlag = false;
+
+        if(roleRepository.findById(roleId).isPresent()){
+            Role role = roleRepository.findById(roleId).orElseThrow();
+            List<Permission> permissions = role.getRolePermission();
+            authorizedFlag = searchPermission(permissions,request);
+        }else{
+            throw new UserDemoException(HttpStatus.BAD_REQUEST,
+                    new UserDemoError(CodesError.CODE_05.getCode(),CodesError.CODE_05.getMessage()));
+        }
+        if(!authorizedFlag){
+            throw new UserDemoException(HttpStatus.BAD_REQUEST,
+                    new UserDemoError(CodesError.CODE_06.getCode(),CodesError.CODE_06.getMessage()));
+        }
+    }
+
+    private boolean searchPermission(List<Permission> permissions, HttpServletRequest request){
+        for (Permission permission:permissions) {
+            String permissionRequest = permission.getMethod() + " " + request.getRequestURI();
+            String currentRequest = request.getMethod() + " " + request.getRequestURI();
+
+            if(permissionRequest.equals(currentRequest)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @SneakyThrows
     private void createUnauthorizedFilter(UserDemoException userDemoException, HttpServletResponse response) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -97,10 +137,12 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
 
     private SecurityContext parseClaims(String jwtToken, Claims claims) {
         String userId = claimKey(claims, USER_ID_CLAIM_NAME);
+        String roleId = claimKey(claims, ROLE_ID_CLAIM_NAME);
 
         SecurityContext context = new SecurityContext();
         try {
             context.setUserId(UUID.fromString(userId));
+            context.setRoleId(UUID.fromString(roleId));
             context.setToken(jwtToken);
         } catch (IllegalArgumentException e) {
             throw new MalformedJwtException("Error parsing jwt");

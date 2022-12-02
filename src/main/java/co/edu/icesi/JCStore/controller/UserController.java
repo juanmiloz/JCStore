@@ -38,7 +38,7 @@ public class UserController implements UserAPI {
     private void verifyEmailOrPhone(CreateUserDTO createUserDTO){
         if(createUserDTO.getEmail() == null && createUserDTO.getPhone() == null){
             throw new UserDemoException(HttpStatus.BAD_REQUEST,
-                    new UserDemoError(CodesError.CODE_O1.getCode(),CodesError.CODE_O1.getMessage()));
+                    new UserDemoError(CodesError.CODE_01.getCode(),CodesError.CODE_01.getMessage()));
         }
     }
 
