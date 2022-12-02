@@ -1,5 +1,6 @@
 package co.edu.icesi.JCStore.service.impl;
 
+import co.edu.icesi.JCStore.constants.OrderStatus;
 import co.edu.icesi.JCStore.model.Item;
 import co.edu.icesi.JCStore.model.Order;
 import co.edu.icesi.JCStore.model.OrderItem;
@@ -56,6 +57,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOrdersMadeByUser(UUID userId) {
         return orderRepository.findUserOrders(userId).orElse(new ArrayList<>());
+    }
+
+    @Override
+    public Order cancelOrder(UUID orderId) {
+        Order order = orderRepository.findById(orderId).orElse(null);
+        if(order != null){
+            order.setStatus(OrderStatus.CANCELED);
+            return orderRepository.save(order);
+        }
+        return null;
     }
 
     private void calculateOrdersTotal(Order order) {

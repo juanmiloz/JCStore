@@ -24,4 +24,7 @@ public interface OrderAPI {
 
     @GetMapping("/users/{userId}")
     public List<OrderDTO> getOrdersMadeByUser(@PathVariable UUID userId);
+
+    @PatchMapping("/cancel/{orderId}")
+    public OrderDTO cancelOrder(@PathVariable UUID orderId);
 }

@@ -18,4 +18,6 @@ public interface OrderService {
     public Order updateOrderStatus(@PathVariable UUID orderId, @RequestBody Order order);
 
     public List<Order> getOrdersMadeByUser(@PathVariable UUID userId);
+
+    public Order cancelOrder(@PathVariable UUID orderId);
 }
