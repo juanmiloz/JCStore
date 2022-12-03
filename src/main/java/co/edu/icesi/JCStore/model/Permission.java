@@ -1,6 +1,8 @@
 package co.edu.icesi.JCStore.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -12,6 +14,8 @@ import java.util.UUID;
 @Table(name = "user_permission")
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Permission {
 
     @Id
